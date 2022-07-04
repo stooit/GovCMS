@@ -9,7 +9,7 @@ type: 'canonical_entities:node'
 pattern: '[node:title]'
 selection_criteria:
   3541b888-ba9c-41b5-85a4-a16148c9c5b4:
-    id: node_type
+    id: 'entity_bundle:node'
     bundles:
       govcms_standard_page: govcms_standard_page
     negate: false
