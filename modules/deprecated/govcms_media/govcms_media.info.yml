@@ -3,7 +3,7 @@ description: 'Provide media management functionality. [deprecated]'
 package: GovCMS8 [deprecated]
 type: module
 core: 8.x
-core_version_requirement: ^8 || ^9
+core_version_requirement: ^8 || ^9 || ^10
 dependencies:
   - content_moderation
   - dropzonejs_eb_widget
