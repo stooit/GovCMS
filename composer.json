@@ -55,6 +55,8 @@
         "drupal/core-recommended": "^10",
         "drupal/ctools": "^4.0",
         "drupal/diff": "1.x-dev",
+        "drupal/dropzonejs": "2.x-dev",
+        "drupal/dynamic_entity_reference": "3.x-dev",
         "drupal/entity_browser": "2.x-dev",
         "drupal/entity_reference_revisions": "1.x-dev",
         "drupal/honeypot": "2.1.x-dev",
