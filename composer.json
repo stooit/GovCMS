@@ -59,6 +59,7 @@
         "drupal/dynamic_entity_reference": "3.x-dev",
         "drupal/entity_browser": "2.x-dev",
         "drupal/entity_reference_revisions": "1.x-dev",
+        "drupal/facets": "2.0.4",
         "drupal/honeypot": "2.1.x-dev",
         "drupal/modifiers": "1.x-dev",
         "drupal/paragraphs": "1.x-dev",
