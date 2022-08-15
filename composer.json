@@ -69,7 +69,7 @@
         "drupal/redirect": "1.x-dev",
         "drupal/role_delegation": "^1.2",
         "drupal/scheduled_transitions": "^2.3",
-        "drupal/search_api": "1.x-dev",
+        "drupal/search_api": "^1.25",
         "drupal/search_api_attachments": "9.0.0",
         "drupal/search_api_solr": "4.2.7",
         "drupal/simple_sitemap": "4.1.2",
