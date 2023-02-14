@@ -90,14 +90,7 @@
         "drupal-scaffold": {
             "locations": {
                 "web-root": "web/"
-            },
-            "initial": {
-                "sites/default/default.services.yml": "sites/default/services.yml",
-                "sites/default/default.settings.php": "sites/default/settings.php"
-            },
-            "excludes": [
-                "sites/development.services.yml"
-            ]
+            }
         },
         "installer-paths": {
             "web/core": [
@@ -128,9 +121,6 @@
         "enable-patching": true,
         "composer-exit-on-patch-failure": true,
         "patches": {
-            "drupal/google_analytics": {
-                "Fix deprecated warnings for PHP 8.1 compatibility - https://www.drupal.org/project/google_analytics/issues/3258588": "https://www.drupal.org/files/issues/2022-06-03/google_analytics-jsonserialize-code-standard-fixes-3258588-20.patch"
-            },
             "drupal/metatag": {
                 "Unsetting metatags": "https://www.drupal.org/files/issues/2022-03-15/metatag-unset-2735195.patch"
             },
@@ -138,9 +128,7 @@
                 "Config variable contact_page_url doesn't exist in Form- https://www.drupal.org/project/securitytxt/issues/3292099": "https://www.drupal.org/files/issues/2022-06-23/3292099-config-variable-contactpageurl.patch"
             },
             "drupal/tfa": {
-                "Create Email one-time-code Validation Plugin & related Setup Plugin - https://www.drupal.org/project/tfa/issues/2930541": "https://www.drupal.org/files/issues/2020-10-19/tfa-2930541-22_0.patch",
-                "Users' recovery codes exposed to admin users - https://www.drupal.org/project/tfa/issues/3075304": "https://www.drupal.org/files/issues/2021-01-14/tfa-3075304-15.patch",
-                "Set upper limit for number of skipped validation": "https://www.drupal.org/files/issues/2022-02-09/3263289-set-upper-limit.patch"
+                "Create Email one-time-code Validation Plugin & related Setup Plugin - https://www.drupal.org/project/tfa/issues/2930541": "https://www.drupal.org/files/issues/2022-11-23/tfa-2930541-54_2.patch"
             },
             "drupal/twig_tweak": {
                 "sanitize input": "https://www.drupal.org/files/issues/2021-02-03/twig_tweak-token-xss.patch"
@@ -159,35 +147,24 @@
             ]
         }
     },
-    "autoload": {
-        "psr-4": {
-            "GovCMS\\composer\\": "src/composer"
-        }
-    },
     "config": {
         "allow-plugins": {
             "composer/installers": true,
             "cweagans/composer-patches": true,
             "drupal/core-composer-scaffold": true,
-            "oomphinc/composer-installers-extender": true
+            "dealerdirect/phpcodesniffer-composer-installer": true,
+            "oomphinc/composer-installers-extender": true,
+            "mglaman/composer-drupal-lenient": true
         },
         "bin-dir": "bin/",
         "sort-packages": true,
         "optimize-autoloader": true
     },
     "scripts": {
-        "pre-install-cmd": [
-            "GovCMS\\composer\\ScriptHandler::checkComposerVersion"
-        ],
-        "pre-update-cmd": [
-            "GovCMS\\composer\\ScriptHandler::checkComposerVersion"
-        ],
         "post-install-cmd": [
-            "GovCMS\\composer\\ScriptHandler::createRequiredFiles",
             "rsync -av --delete --exclude 'web' --exclude '.git' --exclude '.tugboat' --exclude 'vendor' --exclude 'tests' ./ web/profiles/govcms"
         ],
         "post-update-cmd": [
-            "GovCMS\\composer\\ScriptHandler::createRequiredFiles",
             "rsync -av --delete --exclude 'web' --exclude '.git' --exclude '.tugboat' --exclude 'vendor' --exclude 'tests' ./ web/profiles/govcms"
         ],
         "nuke": "rm -r -f composer.lock bin app web vendor"

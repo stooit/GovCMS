@@ -8,6 +8,7 @@
 use Drupal\node\Entity\Node;
 use Drupal\shortcut\Entity\Shortcut;
 use Drupal\menu_link_content\Entity\MenuLinkContent;
+use Drupal\user\RoleInterface;
 
 /**
  * Define a default theme constant.
@@ -112,7 +113,7 @@ function govcms_install() {
     ->save(TRUE);
 
   // Set the path to the logo, favicon and README file based on install directory.
-  $govcms_path = drupal_get_path('profile', 'govcms');
+  $govcms_path = \Drupal::service('extension.list.profile')->getPath('govcms');
   \Drupal::configFactory()
     ->getEditable('system.theme.global')
     ->set('logo', [
@@ -127,6 +128,22 @@ function govcms_install() {
       'use_default' => FALSE,
     ])
     ->save(TRUE);
+
+  // Grant the "view securitytxt" permission to all users by default.
+  // The Security Text module is a dependency of GovCMS Security module,
+  // which should be installed already at this point.
+  // govcms_security_update_9001() is doing the same thing as here.
+  // We might remove all updates for GovCMS 10.
+  // That is why we duplicated them here.
+  $module_handler = \Drupal::moduleHandler();
+  if ($module_handler->moduleExists('user') && $module_handler->moduleExists('securitytxt')) {
+    // Anonymous role.
+    user_role_grant_permissions(RoleInterface::ANONYMOUS_ID, [
+      'view securitytxt']);
+    // Authenticated role.
+    user_role_grant_permissions(RoleInterface::AUTHENTICATED_ID, [
+      'view securitytxt']);
+  }
 }
 
 /**
@@ -160,5 +177,31 @@ function govcms_update_9001() {
   // Remove stub modules from system.schema.
   foreach($stub_modules as $stub_module) {
     \Drupal::keyValue('system.schema')->delete($stub_module);
+  }
+}
+
+/**
+ * Issue GOVCMSD9-695: Remove update_notifications_disable module from distribution.
+ */
+function govcms_update_9002() {
+  $disabling_modules = [
+    'update_notifications_disable',
+  ];
+
+  $extension_config = \Drupal::configFactory()->getEditable('core.extension');
+  $module = $extension_config->get('module');
+
+  foreach($disabling_modules as $disabling_module) {
+    if (isset($module[$disabling_module])) {
+      unset($module[$disabling_module]);
+    }
+  }
+
+  $extension_config->set('module', $module);
+  $extension_config->save();
+
+  // Remove update_notifications_disable module from system.schema.
+  foreach($disabling_modules as $disabling_module) {
+    \Drupal::keyValue('system.schema')->delete($disabling_module);
   }
 }
